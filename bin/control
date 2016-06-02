@@ -15,7 +15,7 @@ readonly PLAY2_STATUS_RUNNING=2
 readonly PLAY2_STATUS_STOPPED=3
 # End Play2 status
 readonly CARTRIDGE_TYPE="play2"
-readonly WAIT_MESSAGE="So... keep calm and wait... it could be taken ~15 minutes for first build... take a break: watch some videos, listen some music tracks, ..."
+readonly WAIT_MESSAGE="So... keep calm and wait... it could be taking ~15 minutes for first build... take a break: watch some videos, listen to some music tracks, ..."
 
 function get_num_build {
   if [ -f "$PLAY2_NUM_BUILD" ]; then
@@ -53,7 +53,7 @@ function start {
       local S_PLAY_CRYPTO_SECRET=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9_?' | head -c30)
       local S_APPLICATION_CONF=$(find $S_DIST_UNZIPPED -type f -name application.conf | head -n 1)
       local S_RESOURCE_CONF=$(find $S_DIST_UNZIPPED -type f -name openshift.conf | head -n 1)
-      nohup $S_BIN_NAME -Duser.home=${OPENSHIFT_DATA_DIR} -Dhttp.port=8080 -Dhttp.address=${OPENSHIFT_PLAY2_IP} -Dconfig.file=${S_APPLICATION_CONF} -Dconfig.resource=${S_RESOURCE_CONF} -Dplay.crypto.secret="$S_PLAY_CRYPTO_SECRET" -Dpidfile.path=${PLAY2_PID_RUN} -DapplyEvolutions.default=true >> $OPENSHIFT_PLAY2_LOG_DIR/play.log 2>&1 &
+      nohup $S_BIN_NAME -Duser.home=${OPENSHIFT_DATA_DIR} -Dhttp.port=8080 -Dhttp.address=${OPENSHIFT_PLAY2_IP} -Dconfig.resource=openshift.conf -Dplay.crypto.secret="$S_PLAY_CRYPTO_SECRET" -Dpidfile.path=${PLAY2_PID_RUN} -DapplyEvolutions.default=true >> $OPENSHIFT_PLAY2_LOG_DIR/play.log 2>&1 &
     else
       echo "Distribution file [$S_DIST_FILE] not found, start skipped"
     fi
